@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:tic_tac_toe_game/core/init/app_init.dart';
-import 'package:tic_tac_toe_game/feature/listOfGame/list_of_game_view.dart';
+import 'package:tic_tac_toe_game/core/init/app/app_init.dart';
+import 'package:tic_tac_toe_game/feature/createUser/create_user_view.dart';
 
 Future<void> main() async {
   await ApplicationInit.instance.initialize();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const ListOfGameView(),
+      home: const CreateUserView(),
     );
   }
 }
