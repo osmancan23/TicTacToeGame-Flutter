@@ -14,7 +14,7 @@ class ListOfGameView extends StatelessWidget {
         body: Center(
       child: Column(
         children: [
-          10.ph,
+          100.ph,
           ElevatedButton(
             onPressed: () async => await NavigationService.instance.navigateToPage(context, const GameCreateView()),
             style: ElevatedButton.styleFrom(
