@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../constants/app_constants.dart';
+import '../../constants/app/app_constants.dart';
 
 class ApplicationInit {
   static ApplicationInit? _instance;
