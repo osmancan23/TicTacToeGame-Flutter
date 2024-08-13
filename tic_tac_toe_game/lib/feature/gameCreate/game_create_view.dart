@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
+import 'package:tic_tac_toe_game/feature/gameCreate/widget/grid_size_option_widget.dart';
 
 import '../../core/service/supabase_service.dart';
 
@@ -39,11 +42,29 @@ class _GameCreateViewState extends State<GameCreateView> with _GameCreateMixin {
               16.ph,
               const _TextWidget(text: "Board Background Color"),
               8.ph,
-              _OnboardColorOptionListView(onSelect: (color) {}),
+              _OnboardColorOptionListView(onSelect: (color) {
+                setState(() {
+                  _selectedColor = color;
+                });
+              }),
               32.ph,
+              //  GridSizeSelector(onRowsChanged: (int index) {}, onColumnsChanged: (int index) {}),
+              16.ph,
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      print(_selectedColor.toString());
+                      await SupabaseDbService.instance.createGame(
+                          name: _gameNameController.text,
+                          color: _selectedColor!.value,
+                          xPlayer: _playerXController.text,
+                          oPLayer: _playerOController.text,
+                          createPlayerUId: SupabaseDbService.instance.supabase.auth.currentUser!.id);
+                    } catch (e) {
+                      log("Error: $e");
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 12.0),
                     shape: RoundedRectangleBorder(

@@ -1,19 +1,9 @@
 part of "../list_of_game_view.dart";
 
 class _GameItemWidget extends StatelessWidget {
-  final String gameName;
-  final String playerX;
-  final String playerO;
-  final bool isCompleted;
-  final Color backgroundColor;
+  final GameModel gameModel;
 
-  const _GameItemWidget({
-    required this.gameName,
-    required this.playerX,
-    required this.playerO,
-    required this.isCompleted,
-    required this.backgroundColor,
-  });
+  const _GameItemWidget({required this.gameModel});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +11,9 @@ class _GameItemWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: backgroundColor.withOpacity(0.1),
+        color: Color(gameModel.color!.toInt()).withOpacity(0.1),
         borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: backgroundColor, width: 2.0),
+        border: Border.all(color: Color(gameModel.color!.toInt()), width: 2.0),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -54,25 +44,26 @@ class _GameItemWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          gameName,
+          gameModel.name ?? "-",
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            color: backgroundColor,
+            color: Color(gameModel.color!.toInt()),
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'X: $playerX',
+              'X: ${gameModel.xPlayer}',
               style: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.black87,
               ),
             ),
+            10.pw,
             Text(
-              'O: $playerO',
+              'O: ${gameModel.oPlayer}',
               style: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.black87,
@@ -92,13 +83,14 @@ class _GameItemWidget extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: Chip(
             label: Text(
-              isCompleted ? 'Completed' : 'In Progress',
+              (gameModel.isComplete ?? false) ? 'Completed' : 'In Progress',
               style: TextStyle(
-                color: isCompleted ? Colors.green : Colors.orange,
+                color: (gameModel.isComplete ?? false) ? Colors.green : Colors.orange,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            backgroundColor: isCompleted ? Colors.green.withOpacity(0.2) : Colors.orange.withOpacity(0.2),
+            backgroundColor:
+                (gameModel.isComplete ?? false) ? Colors.green.withOpacity(0.2) : Colors.orange.withOpacity(0.2),
           ),
         ),
       ],

@@ -43,6 +43,7 @@ class __OnboardColorOptionListViewState extends State<_OnboardColorOptionListVie
                   setState(() {
                     _selectedIndex = id;
                   });
+                  widget.onSelect(color);
                 },
                 index: index),
           );
