@@ -7,34 +7,51 @@ class _GameItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Color(gameModel.color!.toInt()).withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: Color(gameModel.color!.toInt()), width: 2.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 6.0,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Image.asset(AsssetsEnum.ticTacToe.pngPath, width: 100.0, height: 100.0),
-              16.pw,
-              _buildGameContentWidget()
-            ],
-          ),
-          8.ph,
-          _buildProgressWidget(),
-        ],
+    return GestureDetector(
+      onTap: () => gameModel.isComplete ?? false
+          ? showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Game Completed'),
+                content: Text('Winner: ${gameModel.name}'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
+            )
+          : NavigationService.instance.navigateToPage(context, GameView(gameModel: gameModel)),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: gameModel.color?.toColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12.0),
+          border: Border.all(color: Color(gameModel.color!.toInt()), width: 2.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6.0,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Image.asset(AsssetsEnum.ticTacToe.pngPath, width: 100.0, height: 100.0),
+                16.pw,
+                _buildGameContentWidget()
+              ],
+            ),
+            8.ph,
+            _buildProgressWidget(),
+          ],
+        ),
       ),
     );
   }
@@ -48,7 +65,7 @@ class _GameItemWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            color: Color(gameModel.color!.toInt()),
+            color: gameModel.color?.toColor,
           ),
         ),
         Row(

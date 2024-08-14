@@ -72,4 +72,10 @@ class SupabaseDbService {
 
     return response.map((e) => GameModel.fromJson(e)).toList();
   }
+
+  //update game is_complete true with game id
+  Future<void> updateGameIsComplete({required int gameId}) async {
+    final response = await supabase.from('games').update({'is_complete': true}).eq('id', gameId);
+    log("Response: $response");
+  }
 }

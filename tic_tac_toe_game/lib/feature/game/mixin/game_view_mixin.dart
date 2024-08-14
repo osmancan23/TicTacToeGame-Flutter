@@ -15,7 +15,7 @@ mixin _GameMixin on State<GameView> {
     }
   }
 
-  void _checkWinner() {
+  Future<void> _checkWinner() async {
     const List<List<int>> winPatterns = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8], // Yatay kazanma ihtimalleri
       [0, 3, 6], [1, 4, 7], [2, 5, 8], // Dikey kazanma ihtimalleri
@@ -28,15 +28,16 @@ mixin _GameMixin on State<GameView> {
         setState(() {
           winnerUser = first;
         });
-        return;
+        await SupabaseDbService.instance.updateGameIsComplete(gameId: widget.gameModel.id!).then((_) async {
+          NavigationService.instance.navigateBack(context);
+          return;
+        });
       }
     }
 
     // Eğer tüm hücreler dolu ve kazanan yoksa oyun berabere.
     if (!board.contains('')) {
-      setState(() {
-        winnerUser = 'Draw';
-      });
+      _resetGame();
     }
   }
 

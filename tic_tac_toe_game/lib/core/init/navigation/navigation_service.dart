@@ -12,4 +12,9 @@ class NavigationService {
   Future<void> navigateToPage(BuildContext context, Widget page) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
+
+  //pop
+  void navigateBack(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

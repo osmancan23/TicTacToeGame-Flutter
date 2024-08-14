@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/core/constants/enums/asssets_enum.dart';
+import 'package:tic_tac_toe_game/core/extensions/int_extensions.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
 import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
 import 'package:tic_tac_toe_game/core/service/supabase_service.dart';
@@ -47,11 +48,7 @@ class _ListOfGameViewState extends State<ListOfGameView> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       GameModel game = snapshot.data[index];
-                      return GestureDetector(
-                        onTap: () => NavigationService.instance.navigateToPage(context,
-                            const GameView(gameId: "gameId", playerId: "playerId", backgroundColor: Colors.red)),
-                        child: _GameItemWidget(gameModel: game),
-                      );
+                      return _GameItemWidget(gameModel: game);
                     },
                   );
                 } else if (snapshot.hasError) {

@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:tic_tac_toe_game/core/constants/enums/asssets_enum.dart';
+import 'package:tic_tac_toe_game/core/constants/enums/game_value_enum.dart';
+import 'package:tic_tac_toe_game/core/extensions/int_extensions.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
+import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
+import 'package:tic_tac_toe_game/core/model/game_model.dart';
+import 'package:tic_tac_toe_game/core/service/supabase_service.dart';
 part 'widget/tap_item_widget.dart';
 part "mixin/game_view_mixin.dart";
-
-enum ValueEnum {
-  x(icon: AsssetsEnum.man, value: "X", color: Colors.blue),
-  o(icon: AsssetsEnum.woman, value: "O", color: Colors.red);
-
-  final String value;
-  final AsssetsEnum icon;
-  final Color color;
-  const ValueEnum({required this.value, required this.icon, required this.color});
-}
+part "widget/user_container_widget.dart";
 
 class GameView extends StatefulWidget {
-  final String gameId; // Oyun ID'si
-  final String playerId; // Oynayan oyuncunun ID'si
-  final Color backgroundColor; // Oyun arka plan rengi
+  final GameModel gameModel;
 
-  const GameView({super.key, required this.gameId, required this.playerId, required this.backgroundColor});
+  const GameView({super.key, required this.gameModel});
 
   @override
   _GameViewState createState() => _GameViewState();
@@ -30,18 +22,18 @@ class _GameViewState extends State<GameView> with _GameMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.backgroundColor,
-      appBar: AppBar(title: const Text('Tic Tac Toe')),
+      backgroundColor: widget.gameModel.color?.toColor,
+      appBar: AppBar(title: Text(widget.gameModel.name ?? "-")),
       body: Column(
         //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
           20.ph,
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _UserContainerWidget(name: "Osmancan", type: ValueEnum.x),
-              _UserContainerWidget(name: "Suat", type: ValueEnum.o),
+              _UserContainerWidget(name: widget.gameModel.xPlayer ?? "-", type: GameValueEnum.x),
+              _UserContainerWidget(name: widget.gameModel.oPlayer ?? "-", type: GameValueEnum.o),
             ],
           ),
           if (winnerUser != '')
@@ -60,7 +52,7 @@ class _GameViewState extends State<GameView> with _GameMixin {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                border: Border.all(color: widget.backgroundColor, width: 4.0),
+                border: Border.all(color: widget.gameModel.color!.toColor, width: 4.0),
               ),
               child: GridView.builder(
                 shrinkWrap: true,
@@ -90,40 +82,6 @@ class _GameViewState extends State<GameView> with _GameMixin {
               child: const Text('Play Again'),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _UserContainerWidget extends StatelessWidget {
-  const _UserContainerWidget({
-    required this.name,
-    required this.type,
-  });
-  final String name;
-  final ValueEnum type;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 150,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(type.icon.pngPath, width: 50, height: 50),
-            Text(name),
-            Text(
-              type.value,
-              style: TextStyle(fontSize: 30, color: type.color, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
       ),
     );
   }
