@@ -18,6 +18,19 @@ This project features a dynamic Tic Tac Toe game where users can select the numb
 - Flutter
 - Supabase
 
+## About Supabase
+
+Supabase is an open-source Firebase alternative that provides backend services such as authentication, real-time databases, and storage. It is built on top of PostgreSQL and offers a rich set of features for developers to quickly build and scale their applications. 
+
+In this project, Supabase is used to:
+
+- **Manage User Authentication**: Users are authenticated anonymously and can interact with the game securely.
+- **Store Game Data**: All game-related data, such as game state, player moves, and game results, are stored and managed in a real-time database.
+- **Real-Time Updates**: Supabase's real-time capabilities ensure that game states are updated instantly across all connected clients.
+
+For more information on Supabase, you can visit the [official website](https://supabase.io/).
+
+
 ### Installation Steps
 
 1. **Clone the Flutter Project**:
