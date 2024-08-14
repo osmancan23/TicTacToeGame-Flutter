@@ -37,10 +37,7 @@ class _GameViewState extends State<GameView> with _GameMixin {
                 name: widget.gameModel.xPlayer ?? "-",
                 type: GameValueEnum.x,
               ),
-              _UserContainerWidget(
-                name: widget.gameModel.oPlayer ?? "-",
-                type: GameValueEnum.o,
-              ),
+              _UserContainerWidget(name: widget.gameModel.oPlayer ?? "-", type: GameValueEnum.o),
             ],
           ),
           if (winnerUser != '')
@@ -54,28 +51,32 @@ class _GameViewState extends State<GameView> with _GameMixin {
                 ),
               ),
             ),
-          50.ph,
-          Padding(
-            padding: const EdgeInsets.all(32),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                border: Border.all(color: widget.gameModel.color!.toColor, width: 4.0),
-              ),
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
+          10.ph,
+          SizedBox(
+            height: 400,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(color: widget.gameModel.color!.toColor, width: 4.0),
                 ),
-                itemCount: 9,
-                itemBuilder: (context, index) {
-                  return _TapItemWidget(
-                    value: board[index],
-                    onTap: () => _handleTap(index),
-                  );
-                },
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: widget.gameModel.row!,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                  ),
+                  itemCount: widget.gameModel.row! * widget.gameModel.column!,
+                  itemBuilder: (context, index) {
+                    return _TapItemWidget(
+                      value: board[index],
+                      onTap: () => _handleTap(index),
+                    );
+                  },
+                ),
               ),
             ),
           ),

@@ -1,13 +1,19 @@
 part of '../game_view.dart';
 
 mixin _GameMixin on State<GameView> {
-  List<String> board = List.filled(9, '');
+  late List<String> board;
+  late int rows;
+  late int columns;
   bool isXTurn = true;
   String winnerUser = '';
+  late IGameService _gameService;
 
   @override
   void initState() {
     super.initState();
+    rows = widget.gameModel.row ?? 3; // Kullanıcının seçtiği satır sayısı
+    columns = widget.gameModel.column ?? 3; // Kullanıcının seçtiği sütun sayısı
+    board = List.filled(rows * columns, '');
     _gameService = GameService(supabase: Supabase.instance.client);
   }
 
@@ -22,20 +28,11 @@ mixin _GameMixin on State<GameView> {
   }
 
   Future<void> _checkWinner() async {
-    const List<List<int>> winPatterns = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
+    final List<List<int>> winPatterns = _generateWinPatterns();
 
     for (var pattern in winPatterns) {
       final String first = board[pattern[0]];
-      if (first != '' && first == board[pattern[1]] && first == board[pattern[2]]) {
+      if (first != '' && pattern.every((index) => board[index] == first)) {
         setState(() {
           winnerUser = first;
         });
@@ -49,9 +46,49 @@ mixin _GameMixin on State<GameView> {
     }
   }
 
+  List<List<int>> _generateWinPatterns() {
+    final List<List<int>> winPatterns = [];
+
+    // Yatay kazanma ihtimalleri
+    for (int i = 0; i < rows; i++) {
+      List<int> pattern = [];
+      for (int j = 0; j < columns; j++) {
+        pattern.add(i * columns + j);
+      }
+      winPatterns.add(pattern);
+    }
+
+    // Dikey kazanma ihtimalleri
+    for (int i = 0; i < columns; i++) {
+      List<int> pattern = [];
+      for (int j = 0; j < rows; j++) {
+        pattern.add(j * columns + i);
+      }
+      winPatterns.add(pattern);
+    }
+
+    // Çapraz kazanma ihtimalleri (sol üstten sağ alta)
+    if (rows == columns) {
+      List<int> diagonal1 = [];
+      for (int i = 0; i < rows; i++) {
+        diagonal1.add(i * columns + i);
+      }
+      winPatterns.add(diagonal1);
+
+      // Çapraz kazanma ihtimalleri (sağ üstten sol alta)
+      List<int> diagonal2 = [];
+      for (int i = 0; i < rows; i++) {
+        diagonal2.add(i * columns + (columns - 1 - i));
+      }
+      winPatterns.add(diagonal2);
+    }
+
+    return winPatterns;
+  }
+
   void _resetGame() {
     setState(() {
-      board = List.filled(9, '');
+      board = List.filled(rows * columns, '');
       isXTurn = true;
       winnerUser = '';
     });

@@ -7,6 +7,7 @@ import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
 import 'package:tic_tac_toe_game/core/service/game_service.dart';
 
 import '../../core/service/user_service.dart';
+import 'widget/grid_size_option_widget.dart';
 
 part 'mixin/game_create_mixin.dart';
 part "widget/color_option_widget.dart";
@@ -48,7 +49,15 @@ class _GameCreateViewState extends State<GameCreateView> with _GameCreateMixin {
                 });
               }),
               32.ph,
-              //  GridSizeSelector(onRowsChanged: (int index) {}, onColumnsChanged: (int index) {}),
+              GridSizeSelector(onRowsChanged: (int index) {
+                setState(() {
+                  _rows = index;
+                });
+              }, onColumnsChanged: (int index) {
+                setState(() {
+                  _columns = index;
+                });
+              }),
               16.ph,
               Center(
                 child: ElevatedButton(

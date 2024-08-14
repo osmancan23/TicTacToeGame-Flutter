@@ -8,6 +8,8 @@ mixin _GameCreateMixin on State<GameCreateView> {
   late IGameService _gameService;
   late IUserService _userService;
   late SupabaseClient _supabaseClient;
+  int _rows = 3;
+  int _columns = 3;
   @override
   void initState() {
     super.initState();
@@ -20,6 +22,11 @@ mixin _GameCreateMixin on State<GameCreateView> {
   }
 
   Future<void> _createGame(BuildContext context) async {
+    if (_gameNameController.text.isEmpty || _playerOController.text.isEmpty || _selectedColor == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please fill all fields"),
+      ));
+    }
     try {
       await _gameService
           .createGame(
@@ -27,7 +34,9 @@ mixin _GameCreateMixin on State<GameCreateView> {
               color: _selectedColor!.value,
               xPlayer: _playerXController.text,
               oPLayer: _playerOController.text,
-              createPlayerUId: _supabaseClient.auth.currentUser!.id)
+              createPlayerUId: _supabaseClient.auth.currentUser!.id,
+              row: _rows,
+              column: _columns)
           .then((_) {
         NavigationService.instance.navigateBack(context);
       });

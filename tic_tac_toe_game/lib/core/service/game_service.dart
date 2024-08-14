@@ -14,7 +14,9 @@ abstract class IGameService {
       required int color,
       required String xPlayer,
       required String oPLayer,
-      required String createPlayerUId});
+      required String createPlayerUId,
+      int? row,
+      int? column});
 
   Future<List<GameModel>> getGames();
 
@@ -30,7 +32,9 @@ class GameService extends IGameService {
       required int color,
       required String xPlayer,
       required String oPLayer,
-      required String createPlayerUId}) async {
+      required String createPlayerUId,
+      int? row,
+      int? column}) async {
     final response = await supabase.from('games').insert({
       "name": name,
       "color": color,
@@ -38,6 +42,8 @@ class GameService extends IGameService {
       "o_player": oPLayer,
       "create_player_uid": createPlayerUId,
       "is_complete": false,
+      "row": row ?? 3,
+      "column": column ?? 3
     }).select();
     log("Response: $response");
   }
