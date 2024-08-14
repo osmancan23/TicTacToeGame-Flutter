@@ -9,6 +9,7 @@ class NavigationService {
 
   NavigationService._init();
 
+  //push
   Future<void> navigateToPage(BuildContext context, Widget page) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
@@ -16,5 +17,10 @@ class NavigationService {
   //pop
   void navigateBack(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  //replace
+  Future<void> navigateToPageReplace(BuildContext context, Widget page) async {
+    await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
   }
 }

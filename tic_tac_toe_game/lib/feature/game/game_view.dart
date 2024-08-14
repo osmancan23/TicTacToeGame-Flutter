@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tic_tac_toe_game/core/constants/enums/game_value_enum.dart';
 import 'package:tic_tac_toe_game/core/extensions/int_extensions.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
 import 'package:tic_tac_toe_game/core/model/game_model.dart';
-import 'package:tic_tac_toe_game/core/service/supabase_service.dart';
+import 'package:tic_tac_toe_game/core/service/game_service.dart';
 part 'widget/tap_item_widget.dart';
 part "mixin/game_view_mixin.dart";
 part "widget/user_container_widget.dart";

@@ -1,4 +1,5 @@
 part of '../list_of_game_view.dart';
+
 class _GameStreamListWidget extends StatefulWidget {
   const _GameStreamListWidget();
 
@@ -8,44 +9,40 @@ class _GameStreamListWidget extends StatefulWidget {
 
 class __GameStreamListWidgetState extends State<_GameStreamListWidget> {
   List<GameModel> games = [];
-  late Stream gameStream;
+  late StreamSubscription streamSubscription;
   @override
   void initState() {
     super.initState();
-    gameStream = Supabase.instance.client.from("games").stream(primaryKey: ["id"]);
+    streamSubscription =
+        Supabase.instance.client.from('games').stream(primaryKey: ['id']).listen((List<dynamic> games) {
+      String userId = Supabase.instance.client.auth.currentUser!.id;
+      final filteredGames = games.where((game) => game['create_player_uid'] == userId).toList();
+      this.games.clear();
+      for (var element in filteredGames) {
+        this.games.add(GameModel.fromJson(element));
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await streamSubscription.cancel();
+    });
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: gameStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          if (snapshot.hasData) {
-            _handleData(snapshot);
-
-            return ListView.builder(
-              itemCount: games.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                GameModel game = games[index];
-                return _GameItemWidget(gameModel: game);
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return const CircularProgressIndicator();
-          }
-        } else {
-          return const CircularProgressIndicator();
-        }
+    return ListView.builder(
+      itemCount: games.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        GameModel game = games[index];
+        return _GameItemWidget(gameModel: game);
       },
     );
-  }
-
-  void _handleData(AsyncSnapshot<dynamic> snapshot) {
-    games = snapshot.data.map((e) => GameModel.fromJson(e)).toList().cast<GameModel>();
   }
 }

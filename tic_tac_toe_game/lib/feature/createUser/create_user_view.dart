@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
 import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
-import 'package:tic_tac_toe_game/core/service/supabase_service.dart';
 import 'package:tic_tac_toe_game/feature/listOfGame/list_of_game_view.dart';
+
+import '../../core/service/user_service.dart';
 
 part "mixin/create_user_mixin.dart";
 
@@ -36,7 +38,13 @@ class _CreateUserViewState extends State<CreateUserView> with _CreateUserMixin {
             ),
             20.ph,
             ElevatedButton(
-              onPressed: () async => await SupabaseDbService.instance.createUser(_nameController.text),
+              onPressed: () async {
+                await _userService.createUser(_nameController.text).then((val) {
+                  if (val) {
+                    NavigationService.instance.navigateToPageReplace(context, const ListOfGameView());
+                  }
+                });
+              },
               child: const Text("Start Game"),
             ),
             const Spacer(),
