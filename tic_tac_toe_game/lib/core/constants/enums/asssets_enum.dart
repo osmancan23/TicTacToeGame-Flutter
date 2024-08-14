@@ -10,4 +10,6 @@ enum AsssetsEnum {
   const AsssetsEnum(this.iconName);
 
   String get pngPath => iconName.toPng;
+
+  String get lottiePath => iconName.toLottie;
 }

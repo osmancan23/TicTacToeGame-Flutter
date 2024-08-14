@@ -19,28 +19,20 @@ class ListOfGameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text("List of Game"),
-          actions: [
-            IconButton(
-              onPressed: () async => await NavigationService.instance.navigateToPage(context, const GameCreateView()),
-              icon: const Icon(
-                Icons.add_circle_outline,
-                size: 30,
-              ),
-            ),
-          ],
-        ),
-        body: const Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _GameStreamListWidget(),
-              ],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("List of Game"),
+        actions: [
+          IconButton(
+            onPressed: () async => await NavigationService.instance.navigateToPage(context, const GameCreateView()),
+            icon: const Icon(
+              Icons.add_circle_outline,
+              size: 30,
             ),
           ),
-        ));
+        ],
+      ),
+      body: const _GameStreamListWidget(),
+    );
   }
 }

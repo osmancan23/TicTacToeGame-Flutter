@@ -11,8 +11,6 @@ mixin _CreateUserMixin on State<CreateUserView> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (_userService.checkUser()) {
         await NavigationService.instance.navigateToPage(context, const ListOfGameView());
-      } else {
-        await _userService.signInAnon();
       }
     });
   }
