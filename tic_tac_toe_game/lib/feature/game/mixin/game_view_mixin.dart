@@ -11,8 +11,8 @@ mixin _GameMixin on State<GameView> {
   @override
   void initState() {
     super.initState();
-    rows = widget.gameModel.row ?? 3; // Kullanıcının seçtiği satır sayısı
-    columns = widget.gameModel.column ?? 3; // Kullanıcının seçtiği sütun sayısı
+    rows = widget.gameModel.row ?? 3;
+    columns = widget.gameModel.column ?? 3;
     board = List.filled(rows * columns, '');
     _gameService = GameService(supabase: Supabase.instance.client);
   }
