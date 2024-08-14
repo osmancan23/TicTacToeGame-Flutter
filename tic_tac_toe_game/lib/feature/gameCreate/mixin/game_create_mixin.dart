@@ -7,12 +7,13 @@ mixin _GameCreateMixin on State<GameCreateView> {
   Color? _selectedColor;
   late IGameService _gameService;
   late IUserService _userService;
-
+  late SupabaseClient _supabaseClient;
   @override
   void initState() {
     super.initState();
-    _gameService = GameService(supabase: Supabase.instance.client);
-    _userService = UserService(supabase: Supabase.instance.client);
+    _supabaseClient = Supabase.instance.client;
+    _gameService = GameService(supabase: _supabaseClient);
+    _userService = UserService(supabase: _supabaseClient);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _playerXController.text = await _userService.getMyUserName();
     });
@@ -26,7 +27,7 @@ mixin _GameCreateMixin on State<GameCreateView> {
               color: _selectedColor!.value,
               xPlayer: _playerXController.text,
               oPLayer: _playerOController.text,
-              createPlayerUId: SupabaseDbService.instance.supabase.auth.currentUser!.id)
+              createPlayerUId: _supabaseClient.auth.currentUser!.id)
           .then((_) {
         NavigationService.instance.navigateBack(context);
       });

@@ -6,7 +6,6 @@ import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
 import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
 import 'package:tic_tac_toe_game/core/service/game_service.dart';
 
-import '../../core/service/supabase_service.dart';
 import '../../core/service/user_service.dart';
 
 part 'mixin/game_create_mixin.dart';
