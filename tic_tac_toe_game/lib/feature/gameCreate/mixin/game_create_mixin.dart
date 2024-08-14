@@ -13,4 +13,21 @@ mixin _GameCreateMixin on State<GameCreateView> {
       _playerXController.text = await SupabaseDbService.instance.getMyUserName();
     });
   }
+
+  Future<void> _createGame(BuildContext context) async {
+    try {
+      await SupabaseDbService.instance
+          .createGame(
+              name: _gameNameController.text,
+              color: _selectedColor!.value,
+              xPlayer: _playerXController.text,
+              oPLayer: _playerOController.text,
+              createPlayerUId: SupabaseDbService.instance.supabase.auth.currentUser!.id)
+          .then((_) {
+        NavigationService.instance.navigateBack(context);
+      });
+    } catch (e) {
+      log("Error: $e");
+    }
+  }
 }

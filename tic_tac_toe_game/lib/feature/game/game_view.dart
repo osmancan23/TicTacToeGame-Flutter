@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/core/constants/enums/game_value_enum.dart';
 import 'package:tic_tac_toe_game/core/extensions/int_extensions.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
-import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
 import 'package:tic_tac_toe_game/core/model/game_model.dart';
 import 'package:tic_tac_toe_game/core/service/supabase_service.dart';
 part 'widget/tap_item_widget.dart';
@@ -15,6 +14,7 @@ class GameView extends StatefulWidget {
   const GameView({super.key, required this.gameModel});
 
   @override
+  // ignore: library_private_types_in_public_api
   _GameViewState createState() => _GameViewState();
 }
 
@@ -23,17 +23,23 @@ class _GameViewState extends State<GameView> with _GameMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: widget.gameModel.color?.toColor,
-      appBar: AppBar(title: Text(widget.gameModel.name ?? "-")),
+      appBar: AppBar(title: Text("Game Name: ${widget.gameModel.name ?? "-"}")),
       body: Column(
         //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          20.ph,
+          40.ph,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _UserContainerWidget(name: widget.gameModel.xPlayer ?? "-", type: GameValueEnum.x),
-              _UserContainerWidget(name: widget.gameModel.oPlayer ?? "-", type: GameValueEnum.o),
+              _UserContainerWidget(
+                name: widget.gameModel.xPlayer ?? "-",
+                type: GameValueEnum.x,
+              ),
+              _UserContainerWidget(
+                name: widget.gameModel.oPlayer ?? "-",
+                type: GameValueEnum.o,
+              ),
             ],
           ),
           if (winnerUser != '')
@@ -47,6 +53,7 @@ class _GameViewState extends State<GameView> with _GameMixin {
                 ),
               ),
             ),
+          50.ph,
           Padding(
             padding: const EdgeInsets.all(32),
             child: Container(
@@ -71,16 +78,6 @@ class _GameViewState extends State<GameView> with _GameMixin {
               ),
             ),
           ),
-          //    16.ph,
-          if (winnerUser != '')
-            ElevatedButton(
-              onPressed: _resetGame,
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 12.0),
-                textStyle: const TextStyle(fontSize: 18.0),
-              ),
-              child: const Text('Play Again'),
-            ),
         ],
       ),
     );

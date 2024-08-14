@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_game/core/extensions/num_extensions.dart';
-import 'package:tic_tac_toe_game/feature/gameCreate/widget/grid_size_option_widget.dart';
+import 'package:tic_tac_toe_game/core/init/navigation/navigation_service.dart';
 
 import '../../core/service/supabase_service.dart';
 
@@ -21,9 +21,7 @@ class _GameCreateViewState extends State<GameCreateView> with _GameCreateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Game'),
-      ),
+      appBar: AppBar(title: const Text('Create Game')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -52,19 +50,7 @@ class _GameCreateViewState extends State<GameCreateView> with _GameCreateMixin {
               16.ph,
               Center(
                 child: ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      print(_selectedColor.toString());
-                      await SupabaseDbService.instance.createGame(
-                          name: _gameNameController.text,
-                          color: _selectedColor!.value,
-                          xPlayer: _playerXController.text,
-                          oPLayer: _playerOController.text,
-                          createPlayerUId: SupabaseDbService.instance.supabase.auth.currentUser!.id);
-                    } catch (e) {
-                      log("Error: $e");
-                    }
-                  },
+                  onPressed: () async => await _createGame(context),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 12.0),
                     shape: RoundedRectangleBorder(

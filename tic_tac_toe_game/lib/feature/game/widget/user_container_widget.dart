@@ -7,7 +7,6 @@ class _UserContainerWidget extends StatelessWidget {
   });
   final String name;
   final GameValueEnum type;
-
   @override
   Widget build(BuildContext context) {
     return Container(

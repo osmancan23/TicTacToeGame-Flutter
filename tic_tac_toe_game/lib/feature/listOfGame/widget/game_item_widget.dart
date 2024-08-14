@@ -13,7 +13,7 @@ class _GameItemWidget extends StatelessWidget {
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text('Game Completed'),
-                content: Text('Winner: ${gameModel.name}'),
+                content: Text("Game between ${gameModel.xPlayer} and ${gameModel.oPlayer} is completed."),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
