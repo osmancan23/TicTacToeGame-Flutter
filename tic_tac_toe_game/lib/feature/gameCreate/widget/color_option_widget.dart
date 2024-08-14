@@ -1,6 +1,6 @@
 part of "../game_create_view.dart";
 
-class _OnboardColorOptionListView extends StatefulWidget {
+final class _OnboardColorOptionListView extends StatefulWidget {
   const _OnboardColorOptionListView({super.key, required this.onSelect});
 
   final Function(Color color) onSelect;

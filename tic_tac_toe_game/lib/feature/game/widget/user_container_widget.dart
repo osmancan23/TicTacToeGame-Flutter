@@ -1,6 +1,6 @@
 part of "../game_view.dart";
 
-class _UserContainerWidget extends StatelessWidget {
+final class _UserContainerWidget extends StatelessWidget {
   const _UserContainerWidget({
     required this.name,
     required this.type,

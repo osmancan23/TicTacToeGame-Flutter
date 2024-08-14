@@ -1,6 +1,6 @@
 part of "../list_of_game_view.dart";
 
-class _GameItemWidget extends StatelessWidget {
+final class _GameItemWidget extends StatelessWidget {
   final GameModel gameModel;
 
   const _GameItemWidget({required this.gameModel});

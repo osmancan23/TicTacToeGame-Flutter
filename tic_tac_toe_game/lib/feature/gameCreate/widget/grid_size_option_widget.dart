@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GridSizeSelector extends StatefulWidget {
+final class GridSizeSelector extends StatefulWidget {
   final int initialRows;
   final int initialColumns;
   final ValueChanged<int> onRowsChanged;

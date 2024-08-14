@@ -10,7 +10,7 @@ import '../../core/service/user_service.dart';
 
 part "mixin/create_user_mixin.dart";
 
-class CreateUserView extends StatefulWidget {
+final class CreateUserView extends StatefulWidget {
   const CreateUserView({super.key});
 
   @override
@@ -52,14 +52,5 @@ class _CreateUserViewState extends State<CreateUserView> with _CreateUserMixin {
         ),
       ),
     );
-  }
-
-  Future<void> _createUser(BuildContext context) async {
-    await _userService.signInAnon();
-    await _userService.createUser(_nameController.text).then((val) {
-      if (val) {
-        NavigationService.instance.navigateToPageReplace(context, const ListOfGameView());
-      }
-    });
   }
 }

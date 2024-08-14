@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NavigationService {
+final class NavigationService {
   static NavigationService? _instance;
   static NavigationService get instance {
     _instance ??= NavigationService._init();

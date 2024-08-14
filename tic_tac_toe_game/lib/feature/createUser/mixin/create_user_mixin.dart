@@ -14,4 +14,13 @@ mixin _CreateUserMixin on State<CreateUserView> {
       }
     });
   }
+
+  Future<void> _createUser(BuildContext context) async {
+    await _userService.signInAnon();
+    await _userService.createUser(_nameController.text).then((val) {
+      if (val) {
+        NavigationService.instance.navigateToPageReplace(context, const ListOfGameView());
+      }
+    });
+  }
 }

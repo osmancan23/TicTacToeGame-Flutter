@@ -1,6 +1,6 @@
 part of '../game_view.dart';
 
-class _TapItemWidget extends StatelessWidget {
+final class _TapItemWidget extends StatelessWidget {
   const _TapItemWidget({required this.value, required this.onTap});
 
   final String value;

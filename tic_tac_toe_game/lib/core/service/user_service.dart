@@ -13,7 +13,7 @@ abstract class IUserService {
   Future<String> getMyUserName();
 }
 
-class UserService extends IUserService {
+final class UserService extends IUserService {
   UserService({required super.supabase});
 
   @override

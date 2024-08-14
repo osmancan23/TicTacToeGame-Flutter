@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../constants/app/app_constants.dart';
 
-class ApplicationInit {
+final class ApplicationInit {
   static ApplicationInit? _instance;
   static ApplicationInit get instance {
     _instance ??= ApplicationInit._init();

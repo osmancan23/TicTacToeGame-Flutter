@@ -1,6 +1,6 @@
 part of '../list_of_game_view.dart';
 
-class _GameStreamListWidget extends StatefulWidget {
+final class _GameStreamListWidget extends StatefulWidget {
   const _GameStreamListWidget();
 
   @override

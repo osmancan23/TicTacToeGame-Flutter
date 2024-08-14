@@ -9,7 +9,7 @@ part 'widget/tap_item_widget.dart';
 part "mixin/game_view_mixin.dart";
 part "widget/user_container_widget.dart";
 
-class GameView extends StatefulWidget {
+final class GameView extends StatefulWidget {
   final GameModel gameModel;
 
   const GameView({super.key, required this.gameModel});
@@ -26,7 +26,6 @@ class _GameViewState extends State<GameView> with _GameMixin {
       backgroundColor: widget.gameModel.color?.toColor,
       appBar: AppBar(title: Text("Game Name: ${widget.gameModel.name ?? "-"}")),
       body: Column(
-        //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
           40.ph,
           Row(
@@ -54,7 +53,7 @@ class _GameViewState extends State<GameView> with _GameMixin {
           10.ph,
           SizedBox(
             height: 400,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(32),
               child: Container(

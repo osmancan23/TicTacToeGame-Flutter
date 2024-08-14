@@ -23,7 +23,7 @@ abstract class IGameService {
   Future<void> updateGameIsComplete({required int gameId});
 }
 
-class GameService extends IGameService {
+final class GameService extends IGameService {
   GameService({required super.supabase});
 
   @override

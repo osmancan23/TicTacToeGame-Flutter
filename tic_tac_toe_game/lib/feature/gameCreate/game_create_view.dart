@@ -12,7 +12,7 @@ import 'widget/grid_size_option_widget.dart';
 part 'mixin/game_create_mixin.dart';
 part "widget/color_option_widget.dart";
 
-class GameCreateView extends StatefulWidget {
+final class GameCreateView extends StatefulWidget {
   const GameCreateView({super.key});
 
   @override
@@ -80,7 +80,7 @@ class _GameCreateViewState extends State<GameCreateView> with _GameCreateMixin {
   }
 }
 
-class _TextFieldWidget extends StatelessWidget {
+final class _TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool? readOnly;
@@ -99,7 +99,7 @@ class _TextFieldWidget extends StatelessWidget {
   }
 }
 
-class _TextWidget extends StatelessWidget {
+final class _TextWidget extends StatelessWidget {
   const _TextWidget({required this.text});
   final String text;
   @override

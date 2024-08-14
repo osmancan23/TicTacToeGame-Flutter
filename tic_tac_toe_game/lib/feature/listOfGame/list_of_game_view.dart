@@ -13,7 +13,7 @@ import '../../core/model/game_model.dart';
 part 'widget/game_item_widget.dart';
 part "widget/game_stream_list_widget.dart";
 
-class ListOfGameView extends StatelessWidget {
+final class ListOfGameView extends StatelessWidget {
   const ListOfGameView({super.key});
 
   @override

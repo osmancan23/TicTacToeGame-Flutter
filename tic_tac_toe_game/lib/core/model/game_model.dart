@@ -1,4 +1,4 @@
-class GameModel {
+final class GameModel {
   int? id;
   String? name;
   int? color;

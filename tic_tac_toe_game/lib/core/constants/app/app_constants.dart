@@ -1,4 +1,4 @@
-class AppConstants {
+final class AppConstants {
   static AppConstants? _instance;
   static AppConstants get instance {
     _instance ??= AppConstants._init();
