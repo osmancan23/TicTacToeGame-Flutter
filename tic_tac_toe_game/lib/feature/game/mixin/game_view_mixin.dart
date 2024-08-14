@@ -4,7 +4,6 @@ mixin _GameMixin on State<GameView> {
   List<String> board = List.filled(9, '');
   bool isXTurn = true;
   String winnerUser = '';
-  late IGameService _gameService;
 
   @override
   void initState() {
